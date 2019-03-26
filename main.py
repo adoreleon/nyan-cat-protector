@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from time import sleep
 
 from config import ConfigLoader
@@ -12,7 +13,7 @@ class App:
         self.config = ConfigLoader()
 
         git_class = GitBuilder.get_class_by_name(self.config.get_git_service_name())
-        self.git_class = git_class(self.config.get_sound_file_path())
+        self.git_class = git_class(self.config.get_sound_file_path(), self.config)
 
         self.watch_pipeline()
 

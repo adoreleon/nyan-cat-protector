@@ -4,6 +4,7 @@ Simple python code to watch some CI/CD build and call for the nyan cat to brace 
 
 ## Install
 * pip install -r requirements.txt
+* sudo apt-get install sox libsox-fmt-mp3 (Or https://sourceforge.net/projects/sox/files/sox/14.4.2/ for Windows Users)
 
 ## Configuration
 ### Bitbucket
