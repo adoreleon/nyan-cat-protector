@@ -29,7 +29,7 @@ Just replace the config.ini values with your preferences
 git_service=bitbucket
 
 [BITBUCKET]
-authorization_base64=<your_key>
+authorization_key=<your_key>
 repository_name=<repository_name>
 repository_username=<repository_username>
 ```
