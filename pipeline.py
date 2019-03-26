@@ -11,30 +11,32 @@ class GitBuilder:
 
 
 class BasePipeline:
-    config = None
     mixer = None
+    is_broken = False
+    played_sound = False
 
-    def __init__(self, config):
-        self.config = config
-
-        self._load_mixer()
+    def __init__(self, sound_file_path):
+        self.mixer = mixer.init()
+        mixer.music.load(sound_file_path)
 
     @abstractmethod
-    def is_build_broken(self):
+    def check_pipeline_is_broken(self):
         pass
 
-    def _load_mixer(self):
-        self.mixer = mixer.init()
-
-        sound_path = self.config.get_sound_path()
-        mixer.music.load(sound_path)
+    def is_build_broken(self):
+        if self.check_pipeline_is_broken():
+            self.is_broken = True
+        else:
+            self.is_broken = self.played_sound = False
 
     def check_build(self):
         if self.is_build_broken():
             self.play_sound()
 
     def play_sound(self):
-        mixer.music.play()
+        if not self.played_sound:
+            self.played_sound = True
+            mixer.music.play()
 
 
 class BitbucketPipeline(BasePipeline):
