@@ -21,7 +21,7 @@ class App:
         while True:
             self.git_class.check_build()
 
-            sleep(self.config.get_check_sleep_time())
+            sleep(float(self.config.get_check_sleep_time()))
 
 
 if __name__ == '__main__':

@@ -18,7 +18,8 @@ class ConfigLoader:
 
     def get_sound_file_path(self):
         return "audio_file/airport_message.mp3"
-        # return self.config_data["AUDIO"]["audio_file"]
+        # audio_file_path = self.config_data["AUDIO"]["audio_file"]
+        # return os.path.abspath(audio_file_path)
 
     def get_git_service_name(self):
         return self.config_data["BASE"]["git_service"]

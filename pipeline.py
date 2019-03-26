@@ -34,6 +34,8 @@ class BasePipeline:
         else:
             self.is_broken = self.played_sound = False
 
+        return self.is_broken
+
     def check_build(self):
         if self.is_build_broken():
             self.play_sound()
@@ -45,7 +47,7 @@ class BasePipeline:
 
 
 class BitbucketPipeline(BasePipeline):
-    base_url = "https://api.bitbucket.org/2.0/repositories/{repository_username}/{repository_name}/pipelines/?sort=-created_on"
+    base_url = "https://api.bitbucket.org/2.0/repositories/{repository_name}/{repository_username}/pipelines/?sort=-created_on"
     authorization_token = ""
     repo_username = ""
     repo_name = ""
@@ -68,7 +70,7 @@ class BitbucketPipeline(BasePipeline):
         response = requests.get(self.base_url, headers={"Authorization": "Basic " + self.authorization_token})
 
         if response.status_code == 200:
-            json_response = simplejson.loads(response.json())
+            json_response = response.json()
 
         return json_response
 
@@ -76,9 +78,10 @@ class BitbucketPipeline(BasePipeline):
         is_broken = False
 
         for each_pipeline in pipeline_data_list["values"]:
-            if each_pipeline["result"]["name"] == "FAILED":
+            if each_pipeline["state"]["result"]["name"] == "FAILED":
                 self.blammed = each_pipeline["creator"]["display_name"]
                 is_broken = True
+                break
         return is_broken
 
     def check_pipeline_is_broken(self):
